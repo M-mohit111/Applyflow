@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApplyFlow - Test Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            line-height: 1.5;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4f46e5;
+            margin-bottom: 2rem;
+        }
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+        input, select, textarea {
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #4338ca;
+        }
+        .notice {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ApplyFlow Autofill Demo</h1>
+    
+    <div class="notice">
+        <strong>How to test:</strong><br>
+        1. Click the ApplyFlow extension icon and click "Auto-Fill Form". Watch the fields populate.<br>
+        2. To test the <strong>Learning Feature</strong>, manually type something into the "Random Hobby" or "Favorite Superhero" fields (which the extension doesn't know about), then click the "Submit Application" button at the bottom. A popup should ask if you want to save them!
+    </div>
+
+    <form id="demo-form" onsubmit="event.preventDefault(); alert('Form Submitted! Check if extension asked you to save fields.');">
+        
+        <div class="section">
+            <h2>Personal Information</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="first_name" placeholder="Enter first name">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="last_name" placeholder="Enter last name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Personal Email</label>
+                    <input type="email" id="email" name="email_address" placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Mobile Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Location Details</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="address">Current Address</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city">
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state">
+                </div>
+                <div class="form-group">
+                    <label for="pinCode">PIN Code</label>
+                    <input type="text" id="pinCode" name="pincode">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Coding & Links</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="github">GitHub Profile</label>
+                    <input type="url" id="github" name="github_url">
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input type="url" id="linkedin" name="linkedin_url">
+                </div>
+            </div>
+        </div>
+
+        <!-- THESE FIELDS ARE DELIBERATELY UNKNOWN TO TEST CUSTOM FIELDS FEATURE -->
+        <div class="section" style="border: 2px dashed #f59e0b; padding: 1.5rem; background: #fffbeb;">
+            <h2 style="color: #d97706;">Custom Fields (Test Learning System)</h2>
+            <p style="font-size: 13px; color: #b45309; margin-bottom: 1rem;">Manually fill these and click Submit to trigger the extension's learning popup.</p>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="randomHobby">Random Secret Hobby</label>
+                    <input type="text" id="randomHobby" name="hobby">
+                </div>
+                <div class="form-group">
+                    <label for="superhero">Favorite Superhero</label>
+                    <input type="text" id="superhero" name="superhero">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Submit Application</button>
+    </form>
+</div>
+
+</body>
+</html>

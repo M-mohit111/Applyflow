@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Placement Form (Advanced Edge Cases)</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; display: flex; justify-content: center; padding: 40px; }
+        .form-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
+        h2 { margin-top: 0; color: #111827; }
+        .section-title { font-size: 18px; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 5px; margin-top: 30px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; color: #374151; font-size: 14px; }
+        input[type="text"], input[type="email"], input[type="number"], input[type="url"], select, textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; ring: 2px; }
+        .radio-group, .checkbox-group { display: flex; gap: 15px; align-items: center; }
+        .radio-group input, .checkbox-group input { width: auto; }
+        .radio-group label, .checkbox-group label { display: inline; font-weight: 400; margin: 0; }
+        button { background-color: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; width: 100%; font-weight: 600; }
+        button:hover { background-color: #2563eb; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Advanced Application Form</h2>
+    <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">Use this form to test the extension's edge cases: Full Name, Dynamic Addresses, Custom Questions, Checkboxes, and Captcha Ignoring.</p>
+    
+    <form onsubmit="event.preventDefault(); alert('Form submitted! Check extension to see if it learned custom answers.');">
+        
+        <!-- HIDDEN HONEYPOT (Should be ignored by scanner) -->
+        <input type="hidden" name="csrf_token" value="abc123xyz">
+        <input type="text" class="hidden" name="bot_trap_do_not_fill">
+
+        <h3 class="section-title">Personal Information</h3>
+
+        <div class="form-group">
+            <label for="full_name">Full Name (First + Last)</label>
+            <input type="text" id="full_name" name="fullName" placeholder="e.g. Mohit Agrawal">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="mohit@example.com">
+        </div>
+
+        <div class="form-group">
+            <label>Gender (Radio Test)</label>
+            <div class="radio-group">
+                <input type="radio" id="gender_m" name="gender" value="Male">
+                <label for="gender_m">Male</label>
+                <input type="radio" id="gender_f" name="gender" value="Female">
+                <label for="gender_f">Female</label>
+                <input type="radio" id="gender_o" name="gender" value="Other">
+                <label for="gender_o">Other</label>
+            </div>
+        </div>
+
+        <h3 class="section-title">Location (Dynamic Rules)</h3>
+
+        <div class="form-group">
+            <label for="full_address">Full Address (Should concat line 1, city, etc)</label>
+            <textarea id="full_address" name="address" rows="2" placeholder="123 Main St, City..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="municipality">Municipality (Edge Case: Teach the Answer Bank!)</label>
+            <input type="text" id="municipality" name="municipality" placeholder="Enter your city/town">
+        </div>
+
+        <h3 class="section-title">Education & Documents</h3>
+        
+        <div class="form-group">
+            <label for="resume">Upload Resume (PDF only)</label>
+            <input type="file" id="resume" name="resume" accept=".pdf">
+        </div>
+
+        <div class="form-group">
+            <label for="cgpa">College CGPA (out of 10)</label>
+            <input type="number" step="0.01" id="cgpa" name="cgpa" placeholder="e.g. 8.75">
+        </div>
+
+        <div class="form-group">
+            <label for="grad_year">Graduation Year / Passing Out Batch</label>
+            <select id="grad_year" name="graduationYear">
+                <option value="">Select year...</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="github">GitHub Profile Link</label>
+            <input type="url" id="github" name="githubLink" placeholder="https://github.com/username">
+        </div>
+
+        <h3 class="section-title">Projects</h3>
+        
+        <div class="form-group">
+            <label for="proj_1">Project 1 Name</label>
+            <input type="text" id="proj_1" name="project_1_name">
+        </div>
+        
+        <div class="form-group">
+            <label for="proj_1_url">Project 1 Link (Live Demo or GitHub)</label>
+            <input type="url" id="proj_1_url" name="project_url">
+        </div>
+
+        <div class="form-group">
+            <label for="proj_1_tech">Technologies Used in Project 1</label>
+            <input type="text" id="proj_1_tech" name="project_1_tech">
+        </div>
+
+        <h3 class="section-title">Custom AI Questions</h3>
+
+        <div class="form-group">
+            <label for="expected_ctc">Expected CTC (in LPA)</label>
+            <input type="text" id="expected_ctc" name="expectedCTC" placeholder="e.g. 12 LPA">
+        </div>
+
+        <div class="form-group">
+            <label for="why_join">Why are you a good fit for this specific startup? (Right Click -> Draft AI)</label>
+            <textarea id="why_join" name="whyJoin" rows="3" placeholder="Right click this box to test the AI drafter!"></textarea>
+        </div>
+
+        <h3 class="section-title">Consent & Captcha</h3>
+
+        <div class="form-group">
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" value="agree">
+                <label for="terms">I agree to the Terms & Conditions</label>
+            </div>
+        </div>
+
+        <div class="form-group" style="background: #fdf2f8; padding: 15px; border-radius: 6px; border: 1px dashed #fbcfe8;">
+            <label for="captcha">Type the letters in the image (Captcha Test - Should NOT AutoFill)</label>
+            <input type="text" id="captcha" name="captcha_validation" placeholder="W2X8P">
+        </div>
+
+        <button type="submit">Submit Application</button>
+    </form>
+</div>
+
+</body>
+</html>
