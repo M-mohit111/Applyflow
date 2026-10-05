@@ -58,7 +58,9 @@ All data is stored securely in `chrome.storage.local`. The extension operates en
 
 ## 📸 Screenshots
 
-*(Add screenshots of the Dashboard UI, Light/Dark Mode, and the Auto-fill action here)*
+![pop menu](image.png)
+
+![profile page](image-1.png)
 
 ---
 *Built with passion to help candidates apply faster and get closer to their dream jobs.*
